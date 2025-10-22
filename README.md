@@ -159,7 +159,7 @@ Now all files you see are on the remote server.
 
 ### Test Remote Execution
 
-Open integrated terminal (`` Ctrl + ` ``) and run:
+Open integrated terminal and run:
 
 ```bash
 # Check current location
@@ -177,6 +177,111 @@ nvidia-smi
 ```
 
 If commands show server information, connection successful.
+
+
+
+### Common Linux Commands (Cheat Sheet)
+
+> **🚀 Quick Cheat Sheet — Common Linux Commands**
+>
+> Below are common Linux commands you will frequently use on a remote server, with examples and short explanations for quick reference:
+>
+> - Navigation and current directory
+>
+> ```bash
+> pwd        # Print working directory
+> ls -al     # List files and directories (including hidden) with details
+> cd /path   # Change directory, e.g., cd ~/projects
+> tree       # Show directory tree (may need installation)
+> ```
+>
+> - File and directory operations
+>
+> ```bash
+> mkdir -p dir/subdir    # Create directory recursively
+> touch file.txt         # Create an empty file or update timestamp
+> cp -r src dest         # Copy file or directory (-r for recursive)
+> mv oldname newname     # Move or rename file/directory
+> rm file                # Remove a file
+> rm -rf dir             # Remove directory recursively and force (DANGEROUS)
+> ```
+>
+> - Viewing files
+>
+> ```bash
+> cat file.txt           # Print entire file to terminal
+> less file.txt          # Page through file (press q to quit)
+> head -n 50 file.txt    # Show first 50 lines
+> tail -n 50 file.txt    # Show last 50 lines
+> tail -f logfile        # Follow log in real time (Ctrl+C to stop)
+> ```
+>
+> - Search and find
+>
+> ```bash
+> grep -R "pattern" .    # Recursively search for pattern in files
+> find /path -name "*.py" # Find files matching name pattern
+> locate filename         # Fast locate (database-based; may need updatedb)
+> ```
+>
+> - Permissions and ownership
+>
+> ```bash
+> chmod 644 file          # Change file permissions (example: 644)
+> chmod +x script.sh      # Make script executable
+> chown user:group file   # Change file owner/group (may require sudo)
+> ```
+>
+> - System and process monitoring
+>
+> ```bash
+> ps aux                  # List all running processes
+> top                     # Interactive system/process viewer (press q to quit)
+> htop                    # Improved interactive viewer (if installed)
+> free -h                 # Show memory usage (human readable)
+> df -h                   # Show disk usage by partition (human readable)
+> du -sh path             # Show disk usage of a directory/file (summary)
+> nvidia-smi              # NVIDIA GPU status and usage (if GPU present)
+> ```
+>
+> - Networking and remote transfer
+>
+> ```bash
+> ssh user@host           # Connect to remote host
+> scp local remote:/path  # Copy files via SCP (local -> remote or remote:local)
+> rsync -avz src dst      # Efficiently sync files/directories (incremental, compressed)
+> wget URL                # Download file from web
+> curl -O URL             # Another download method, often used in scripts
+> ```
+>
+> - Compression and archives
+>
+> ```bash
+> tar -czvf archive.tar.gz dir/   # Create gzip tar archive of a directory
+> tar -xzvf archive.tar.gz        # Extract tar.gz archive
+> zip -r archive.zip dir/         # Create zip archive
+> unzip archive.zip               # Extract zip archive
+> ```
+>
+> - Package management (depends on distribution)
+>
+> ```bash
+> sudo apt update && sudo apt install -y pkg   # Debian/Ubuntu (requires sudo)
+> sudo yum install pkg                         # CentOS/RHEL (requires sudo)
+> sudo dnf install pkg                         # Newer Fedora/RHEL
+> ```
+>
+> - Other useful commands
+>
+> ```bash
+> whoami                 # Show current user
+> hostname               # Show host name (useful to confirm target server)
+> uname -a               # Show kernel and system info
+> date                   # Show current date/time
+> history                # Show shell command history
+> ```
+>
+> Tip: Command-line help is your friend—use `command --help` or `man command` for details, e.g. `ls --help` or `man ssh`.
 
 
 ---
@@ -234,14 +339,8 @@ source ~/.bashrc
 conda --version
 ```
 
-#### Step 4: Configure (Optional)
 
-```bash
-# Disable auto-activation of base environment
-conda config --set auto_activate_base false
-```
-
-#### Step 5: Clean Up Installation File
+#### Step 4: Clean Up Installation File
 
 ```bash
 rm ~/Miniconda3-latest-Linux-x86_64.sh
@@ -271,81 +370,7 @@ Installation complete.
 
 ---
 
-## 2.1 Understanding the Scientific Python Ecosystem
-
-Before installation, let's understand the role of each package in the scientific computing workflow:
-
-### The Scientific Computing Stack (Layer by Layer)
-
-```
-Application Layer
-    |
-    |-- Machine Learning: scikit-learn (classification, regression, clustering)
-    |-- Deep Learning: PyTorch (neural networks, GPU acceleration)
-    |
-Data Processing Layer
-    |
-    |-- Tables/DataFrames: Pandas (CSV, SQL-like operations)
-    |-- Visualization: Matplotlib, Seaborn (plots, charts)
-    |
-Numerical Foundation Layer
-    |
-    |-- Arrays/Matrices: NumPy (n-dimensional arrays, broadcasting)
-    |-- Scientific Functions: SciPy (optimization, integration, linear algebra)
-    |
-Hardware Abstraction Layer
-    |
-    |-- CPU: Default NumPy backend
-    |-- GPU: PyTorch with CUDA support
-```
-
-### Package Roles and Relationships
-
-**NumPy (Numerical Python)**:
-- Core: Multi-dimensional arrays (ndarray)
-- Purpose: Fast vectorized operations on arrays
-- Use case: Any numerical computation (foundation for almost all other packages)
-- Key concept: Broadcasting (element-wise operations without loops)
-
-**SciPy (Scientific Python)**:
-- Core: Built on top of NumPy
-- Purpose: Advanced mathematical algorithms
-- Use case: Optimization, integration, interpolation, signal processing, linear algebra
-- Key concept: Extends NumPy with specialized scientific functions
-
-**Pandas**:
-- Core: DataFrame (2D labeled table) and Series (1D labeled array)
-- Purpose: Data manipulation and analysis
-- Use case: Loading CSV/Excel, data cleaning, grouping, merging, time series
-- Key concept: Like SQL for Python, Excel on steroids
-
-**Matplotlib**:
-- Core: MATLAB-like plotting library
-- Purpose: Create static, animated, and interactive visualizations
-- Use case: Line plots, scatter plots, histograms, heatmaps
-- Key concept: Object-oriented plotting with figures and axes
-
-**Seaborn**:
-- Core: Built on Matplotlib
-- Purpose: Statistical data visualization with beautiful defaults
-- Use case: Distribution plots, regression plots, categorical plots
-- Key concept: High-level interface for complex statistical plots
-
-**scikit-learn**:
-- Core: Classical machine learning algorithms
-- Purpose: Predictive data analysis
-- Use case: Classification, regression, clustering, dimensionality reduction
-- Key concept: Consistent API (fit, predict, transform)
-
-**PyTorch**:
-- Core: Tensor library with GPU acceleration
-- Purpose: Deep learning and neural networks
-- Use case: CNN, RNN, Transformers, any gradient-based optimization
-- Key concept: Automatic differentiation, GPU tensors
-
----
-
-## 2.2 Create Isolated Conda Environment
+## 2.1 Create Isolated Conda Environment
 
 ### Why Virtual Environments?
 
@@ -385,6 +410,82 @@ python --version
 Path should contain `envs/sci/`
 
 ---
+
+## 2.2 Understanding the Scientific Python Ecosystem
+
+Before installation, let's understand the role of each package in the scientific computing workflow:
+
+### The Scientific Computing Stack (Layer by Layer)
+
+```
+Application Layer
+    |
+    |-- Machine Learning: scikit-learn (classification, regression, clustering)
+    |-- Deep Learning: PyTorch (neural networks, GPU acceleration)
+    |
+Data Processing Layer
+    |
+    |-- Tables/DataFrames: Pandas (CSV, SQL-like operations)
+    |-- Visualization: Matplotlib, Seaborn (plots, charts)
+    |
+Numerical Foundation Layer
+    |
+    |-- Arrays/Matrices: NumPy (n-dimensional arrays, broadcasting)
+    |-- Scientific Functions: SciPy (optimization, integration, linear algebra)
+    |
+Hardware Abstraction Layer
+    |
+    |-- CPU: Default NumPy backend
+    |-- GPU: PyTorch with CUDA support
+```
+
+### Package Roles and Relationships 
+
+**NumPy (Numerical Python)**:
+- Core: Multi-dimensional arrays (ndarray)
+- Purpose: Fast vectorized operations on arrays
+- Use case: Any numerical computation (foundation for almost all other packages)
+- Key concept: Broadcasting (element-wise operations without loops)
+
+**SciPy (Scientific Python)**:
+- Core: Built on top of NumPy
+- Purpose: Advanced mathematical algorithms
+- Use case: Optimization, integration, interpolation, signal processing, linear algebra
+- Key concept: Extends NumPy with specialized scientific functions
+
+**Pandas**:
+- Core: DataFrame (2D labeled table) and Series (1D labeled array)
+- Purpose: Data manipulation and analysis
+- Use case: Loading CSV/Excel, data cleaning, grouping, merging, time series
+- Key concept: Like SQL for Python, Excel on steroids
+
+**Matplotlib**:
+- Core: MATLAB-like plotting library
+- Purpose: Create static, animated, and interactive visualizations
+- Use case: Line plots, scatter plots, histograms, heatmaps
+- Key concept: Object-oriented plotting with figures and axes
+
+**Seaborn**:
+- Core: Built on Matplotlib
+- Purpose: Statistical data visualization with beautiful defaults
+- Use case: Distribution plots, regression plots, categorical plots
+- Key concept: High-level interface for complex statistical plots
+
+**scikit-learn**:
+- Core: Classical machine learning algorithms
+- Purpose: Predictive data analysis
+- Use case: Classification, regression, clustering, dimensionality reduction
+- Key concept: Consistent API (fit, predict, transform)
+
+**PyTorch**: 
+- Core: Tensor library with GPU acceleration
+- Purpose: Deep learning and neural networks
+- Use case: CNN, RNN, Transformers, any gradient-based optimization
+- Key concept: Automatic differentiation, GPU tensors
+
+
+---
+
 
 ## 2.3 Install Scientific Computing Libraries
 
@@ -601,11 +702,16 @@ sci-workshop/
 
 ---
 
-## 3.2 Scientific Computing Workflow Examples
+## 3.2 Scientific Computing Workflow Examples (with official tutorial link)
 
-All example code is included in the companion `DEMO.ipynb` notebook, organized by:
+
+All example code is included in the companion `DEMO.ipynb` notebook and `src/`, organized by:
 
 ### Example 1: NumPy - Foundation of Numerical Computing
+
+ >✅ [Tutorial – NumPy documentation](https://numpy.org/learn/) 
+ >
+ >✅ [NumPy Quickstart](https://numpy.org/doc/stable/user/quickstart.html) 
 
 **What NumPy Does**:
 - Provides n-dimensional array object (ndarray)
@@ -631,6 +737,10 @@ All example code is included in the companion `DEMO.ipynb` notebook, organized b
 ---
 
 ### Example 2: SciPy - Advanced Scientific Algorithms
+
+ > ✅ [Tutorial – SciPy documentation](https://docs.scipy.org/doc/scipy/tutorial/) 
+ >
+ > ✅ [Getting Started SciPy](https://projects.scipy.org/getting-started.html) 
 
 **What SciPy Does**:
 - Built on NumPy, adds specialized scientific algorithms
@@ -659,6 +769,10 @@ All example code is included in the companion `DEMO.ipynb` notebook, organized b
 
 ### Example 3: Pandas - Data Manipulation and Analysis
 
+ > ✅ [Tutorial – pandas documentation](https://pandas.pydata.org/docs/getting_started/intro_tutorials/) 
+ >
+ > ✅ [“10 Minutes to pandas” – quick intro](https://pandas.pydata.org/docs/user_guide/10min.html)
+
 **What Pandas Does**:
 - Provides DataFrame (2D labeled table) like SQL or Excel
 - Data loading (CSV, Excel, SQL), cleaning, transformation
@@ -686,6 +800,10 @@ All example code is included in the companion `DEMO.ipynb` notebook, organized b
 
 ### Example 4: Matplotlib - Visualization
 
+ > ✅ [Tutorial – Matplotlib documentation](https://matplotlib.org/stable/tutorials/index.html)
+ > 
+ > ✅ [Quick start guide – Matplotlib docs](https://matplotlib.org/stable/users/explain/quick_start.html)
+
 **What Matplotlib Does**:
 - Create static, animated, and interactive plots
 - MATLAB-like interface
@@ -710,6 +828,8 @@ All example code is included in the companion `DEMO.ipynb` notebook, organized b
 ---
 
 ### Example 5: scikit-learn - Machine Learning
+
+ > ✅ [Tutorial – scikit-learn documentation](https://scikit-learn.org/1.4/tutorial/index.html)
 
 **What scikit-learn Does**:
 - Provides classical machine learning algorithms
@@ -738,6 +858,8 @@ All example code is included in the companion `DEMO.ipynb` notebook, organized b
 ---
 
 ### Example 6: PyTorch - Deep Learning and GPU Computing
+
+ > ✅ [Tutorial – PyTorch documentation](https://docs.pytorch.org/tutorials/)
 
 **What PyTorch Does**:
 - Tensor library with GPU acceleration
@@ -878,10 +1000,16 @@ git push -u origin new
 
 5. Enter GitHub username and password (or Personal Access Token)
 
+---
 
+## 4.4 Issues
+
+An example of creating an issue pointing to a line of code, with detailed explanation and screenshots:
+
+https://github.com/YYJmay/test/issues/2
 
 ---
-## 4.4 Daily Git Workflow
+## 4.5 Daily Git Workflow
 
 ```bash
 # Check status
